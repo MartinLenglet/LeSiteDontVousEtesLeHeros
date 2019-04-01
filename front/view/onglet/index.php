@@ -7,9 +7,8 @@
     <title>Document</title>
 </head>
 <body>
-    <a href="testMartin.html">Test Martin</a>
-    <br>
-    Bonjour à tous Je m'appelle Alexandre
-    blbalbllds
+    <?php
+        include 'menu.php';
+    ?>
 </body>
 </html>
