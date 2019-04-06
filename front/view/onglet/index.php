@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -65,6 +65,7 @@
 
     <div class="container">
         <div class="row">
+          <a href="news.php">
             <div class="news col-lg-12">
               <img src="../../images/background.jpg" class="img_news">
               <div class="text_news">
@@ -72,6 +73,7 @@
                 <p>qsjdhqsfisqi qsdgqsogqis qisdqidgqi</p>
               </div>
             </div>
+          </a>
 
             <div class="news col-lg-12">
               <img src="../../images/background.jpg" class="img_news">
