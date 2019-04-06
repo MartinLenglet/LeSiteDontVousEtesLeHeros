@@ -27,7 +27,7 @@
     <div class="carousel-inner">
 
       <div class="item active img_carousel">
-        <img src="../../images/dragon.jpg" alt="Los Angeles" class="img_carousel">
+        <img src="../../images/dragon.jpg" alt="Los Angeles" class="img_carousel" style="heigth:100%;">
         <div class="carousel-caption">
           <h3>Los Angeles</h3>
           <p>LA is always so much fun!</p>
@@ -43,7 +43,7 @@
       </div>
     
       <div class="item img_carousel">
-        <img src="../../images/bandeau-renégats.jpg" alt="New York" class="img_carousel">
+        <img src="../../images/bandeau-renégats.jpg" alt="New York" class="img_carousel" style="heigth:40%;">
         <div class="carousel-caption">
           <h3>New York</h3>
           <p>We love the Big Apple!</p>
@@ -66,8 +66,19 @@
     <div class="container">
         <div class="row">
             <div class="news col-lg-12">
-                <h2>Titre de la news</h2>
+              <img src="../../images/background.jpg" class="img_news">
+              <div class="text_news">
+                <h2>Titre de la news 1</h2>
                 <p>qsjdhqsfisqi qsdgqsogqis qisdqidgqi</p>
+              </div>
+            </div>
+
+            <div class="news col-lg-12">
+              <img src="../../images/background.jpg" class="img_news">
+              <div class="text_news">
+                <h2>Titre de la news 2</h2>
+                <p>qsjdhqsfisqi qsdgqsogqis qisdqidgqi</p>
+              </div>
             </div>
         </div>
     <div>
