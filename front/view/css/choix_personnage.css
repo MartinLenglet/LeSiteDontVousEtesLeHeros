@@ -1,0 +1,38 @@
+body{
+    background-color: black;
+    text-align: center;
+}
+
+.perso{
+    align-content: center;
+    color: white;
+    border: solid white 3px;
+    background-image: url("../../images/perso1.jpg");
+    height: 500px;
+    -moz-transition: opacity 0.4s linear 0s;
+    -webkit-transition: opacity 0.4s linear 0s;
+    transition: opacity 0.4s linear 0s;
+    opacity: 1;
+}
+
+.perso:hover{
+    -moz-transition: opacity 0.4s linear 0s;
+    -webkit-transition: opacity 0.4s linear 0s;
+    transition: opacity 0.4s linear 0s;
+    opacity: 0.5;
+}
+
+.textPerso{
+    position: absolute;
+    bottom: 10%;
+    left: 20%;
+}
+
+.progress{
+    display: inline-block;
+    width: 50%;
+}
+
+.statPerso{
+    margin-top: 300px;
+}
