@@ -7,23 +7,40 @@
     <link rel="stylesheet" href="../css/choix_personnage.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+    <script scr="../js/choix_personnage.js"></script>
     <title>Choix du personnage</title>
-    <p style="display: none">Hello  2</p>
  
     <script>
         $(document).ready(function(){
-            $("#perso1").mouseenter(function() {
-                $("#statPerso").toggle("fast");
+            $("#perso1").mouseover(function() {
+                $("#statPerso").show("slow");
             });
         });
-    </script>  
+        /*$(document).ready(function(){
+            $("#perso1").mouseout(function() {
+                $("#statPerso").hide("slow");
+            });
+        });
+        $(document).ready(function(){
+            $("#progress").mouseover(function() {
+                $("#statPerso").show("slow");
+            });
+        });
+        $(document).ready(function(){
+            $("#btn_suppr").mouseover(function() {
+                $("#statPerso").show("slow");
+            });
+        });*/
+    </script> 
+     
 
 </head>
 <body>
+
     <?php
         include 'menu.php';
     ?>
-    <h1>Sélection du personnage</h1>
+
     <div class="container">
         <div class="row">
             <div id="perso1" class="col-lg-5 perso">
@@ -66,6 +83,8 @@
                     <div class="textPerso">
                         <h2>Nom du personnage</h2>
                     </div>
+
+                    <button type="button" class="btn_suppr btn btn-danger btn-block">Supprimer</button> 
                 </div>
             </div>
             <div class="col-lg-2">
@@ -73,6 +92,9 @@
             <div class="col-lg-5 perso">
             </div>
         </div>
+
+        <h1>Sélection du personnage</h1>
     </div>
+    
 </body>
 </html>

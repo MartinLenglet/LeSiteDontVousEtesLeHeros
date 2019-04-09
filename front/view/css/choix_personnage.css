@@ -13,6 +13,7 @@ body{
     -webkit-transition: opacity 0.4s linear 0s;
     transition: opacity 0.4s linear 0s;
     opacity: 1;
+    margin-bottom: 20px;
 }
 
 .perso:hover{
@@ -24,7 +25,7 @@ body{
 
 .textPerso{
     position: absolute;
-    bottom: 10%;
+    top: 10%;
     left: 20%;
 }
 
@@ -34,5 +35,13 @@ body{
 }
 
 .statPerso{
-    margin-top: 300px;
+    margin-top: 200px;
+    display:none;
+}
+
+.btn_suppr{
+    background-color: red;
+    position: absolute;
+    bottom: 0px;
+    left: 0px;
 }

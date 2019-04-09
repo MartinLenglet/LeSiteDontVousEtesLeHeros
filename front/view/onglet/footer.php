@@ -1,0 +1,12 @@
+<style>
+.bg-4 {
+  background-color: #2f2f2f;
+  color: #ffffff;
+  height: 50px;
+  align: center;
+}
+</style>
+
+<footer class="container-fluid bg-4 text-center">
+  <p>Bootstrap Theme Made By <a href="https://www.w3schools.com">www.w3schools.com</a></p>
+</footer>
