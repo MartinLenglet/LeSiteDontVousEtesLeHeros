@@ -3,45 +3,50 @@ body{
     text-align: center;
 }
 
+img{
+    width: 100%;
+}
+
 .perso{
-    align-content: center;
     color: white;
     border: solid white 3px;
-    background-image: url("../../images/perso1.jpg");
     height: 500px;
     -moz-transition: opacity 0.4s linear 0s;
     -webkit-transition: opacity 0.4s linear 0s;
     transition: opacity 0.4s linear 0s;
     opacity: 1;
     margin-bottom: 20px;
+    overflow: hidden;
 }
 
-.perso:hover{
+/*.perso:hover{
     -moz-transition: opacity 0.4s linear 0s;
     -webkit-transition: opacity 0.4s linear 0s;
     transition: opacity 0.4s linear 0s;
     opacity: 0.5;
-}
+}*/
 
 .textPerso{
     position: absolute;
-    top: 10%;
-    left: 20%;
+    width: 100%;
+    left: 0px;
 }
 
-.progress{
-    display: inline-block;
-    width: 50%;
-}
-
-.statPerso{
-    margin-top: 200px;
-    display:none;
-}
-
-.btn_suppr{
-    background-color: red;
+.btnSuppr{
     position: absolute;
+    background-color: red;
     bottom: 0px;
     left: 0px;
+}
+
+.imgPerso{
+    position: absolute;
+    width: 100%;
+    left: 0px;
+}
+
+.btnAdd{
+    position: absolute;
+    top: 40%;
+    left: 42%;
 }
