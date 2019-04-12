@@ -1,0 +1,83 @@
+body{
+    background-color: black;
+}
+
+img{
+    width: 100%;
+}
+
+.contexte{
+    color: white;
+    border: solid white 3px;
+}
+
+.evenement{
+    color: white;
+    position: relative;
+    padding:0 0 0 0;
+}
+
+.profil{
+    color: white;
+    border: solid white 3px;
+}
+
+.imgChapitre{
+    position: absolute;
+    width: 100%;
+}
+
+.textEvenement{
+    position: absolute;
+    width: 80%;
+    text-align: center;
+    margin-top: 15%;
+    margin-left: 10%;
+    margin-right: 10%;
+}
+
+.choix{
+    color: white;
+    position: absolute;
+    text-align: center;
+    border: solid white 3px;
+    width: 25%;
+}
+
+#choix1{
+    top: 350px;
+    left: 100px;
+}
+
+#choix2{
+    right: 100px;
+    top: 350px;
+}
+
+.equipement{
+    border: solid 1px red;
+    align-content: center;
+    text-align: center;
+}
+
+.pieceEquipement{
+    width: 50%;
+    display: inline-block;
+    border: 1px solid orange;
+    height: 75px;
+    margin-bottom: 10px;
+}
+
+.inventaire{
+    border: solid 1px red;
+    align-content: center;
+    text-align: center;
+}
+
+.objet{
+    width: 25%;
+    display: inline-block;
+    border: 1px solid orange;
+    height: 50px;
+    margin-bottom: 10px;
+}
