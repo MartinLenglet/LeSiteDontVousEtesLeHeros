@@ -1,0 +1,10 @@
+body{
+    background-color: black;
+}
+
+.boite{
+    border: solid white 3px;
+    color: white;
+    margin-top: 10%;
+    padding-bottom: 3%;
+}
