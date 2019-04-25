@@ -10,8 +10,7 @@
       <li><a href="choix_personnage.php">Mes Personnages</a></li>
     </ul>
     <ul class="nav navbar-nav navbar-right">
-      <li><a href="#"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
-      <li><a href="connexion.php"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+      <li><a href="connexion.php"><span class="glyphicon glyphicon-user"></span> Connexion</a></li>
     </ul>
   </div>
 </nav>
