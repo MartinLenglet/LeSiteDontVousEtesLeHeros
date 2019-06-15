@@ -85,21 +85,21 @@
         </div>
     <div>
 
-    <?php $data = json_decode(file_get_contents ("http://localhost/LeSiteDontVousEtesLeHeros/back/news"), true); 
-    var_dump($data); ?>
+    <?php //$data = json_decode(file_get_contents ("http://localhost/LeSiteDontVousEtesLeHeros/back/news"), true); 
+    //var_dump($data); ?>
 
-    <?php var_dump($data[0]); ?>
+    <?php //var_dump($data[0]); ?>
 
     <?php 
       // create curl resource
-      $ch = curl_init();
+      //$ch = curl_init();
       // set url 
       //curl_setopt($ch, CURLOPT_URL, "http://localhost/LeSiteDontVousEtesLeHeros/back/news");
       // $output contains the output json
-      $output = curl_exec($ch);
+      //$output = curl_exec($ch);
       //var_dump($output);
       // close curl resource to free up system resources 
-      curl_close($ch);
+      //curl_close($ch);
       // {"name":"Baron","gender":"male","probability":0.88,"count":26}
       //var_dump(json_decode($output));
     ?>
