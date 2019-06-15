@@ -35,7 +35,7 @@
                 <div class="textPerso">
                     <h2>Création de personnage</h2>
                 </div>
-                <button type="button" class="btnAdd btn btn-primary btn-lg">Création</button>
+                <a href="creation_perso.php"><button type="button" class="btnAdd btn btn-primary btn-lg">Création</button></a>
             </div>
         </div>
 

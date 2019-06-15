@@ -1,0 +1,29 @@
+body{
+    background-color: black;
+    color: white;
+}
+
+.aventure{
+    /*border: white solid 2px;*/
+    margin-bottom: 15px;
+}
+
+.titre{
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.img_aventure{
+    width: 100%;
+    -moz-transition: opacity 0.4s linear 0s;
+    -webkit-transition: opacity 0.4s linear 0s;
+    transition: opacity 0.4s linear 0s;
+    opacity: 0.5;
+}
+
+.img_aventure:hover{
+    -moz-transition: opacity 0.4s linear 0s;
+    -webkit-transition: opacity 0.4s linear 0s;
+    transition: opacity 0.4s linear 0s;
+    opacity: 1;
+}
