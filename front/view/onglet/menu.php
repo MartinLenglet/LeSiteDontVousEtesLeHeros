@@ -5,6 +5,7 @@
     </div>
     <ul class="nav navbar-nav">
       <li class="active"><a href="index.php">Accueil</a></li>
+      <li><a href="add_news.php">Nouvelle News</a></li>
       <li><a href="choix_aventure.php">Nouvelle Aventure</a></li>
       <li><a href="aventure.php">Continuer l'aventure</a></li>
       <li><a href="choix_personnage.php">Mes Personnages</a></li>
