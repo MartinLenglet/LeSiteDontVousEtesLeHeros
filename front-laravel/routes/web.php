@@ -16,3 +16,5 @@ Route::get('/', function () {
 });
 
 Route::get('home', 'ArticleController@index');
+Route::get('aventures', 'AventureController@index');
+Route::get('events/{id}', 'EventController@show');

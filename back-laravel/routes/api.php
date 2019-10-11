@@ -55,6 +55,9 @@ Route::get('articles', 'ArticleController@index');
 Route::get('lastArticles/{numberArticles}', 'ArticleController@lastArticles');
 Route::get('bestAdventures', 'AdventureController@bestAdventures');
 
+// Liste des aventures
+Route::get('adventures', 'AdventureController@index');
+
 
 // Pour l'enregistrement
 Route::post('register', 'Auth\RegisterController@register');

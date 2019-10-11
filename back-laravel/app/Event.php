@@ -2,6 +2,7 @@
 
 namespace App;
 use App\Choice;
+use App\Adventure;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -15,5 +16,11 @@ class Event extends Model
     {
         $choices = Choice::all()->where('eventFrom_id', $event->id);
         return $choices;
+    }
+
+    static public function findAdventure(Event $event)
+    {
+        $adventure = Adventure::find($event->adventure_id);
+        return $adventure;
     }
 }

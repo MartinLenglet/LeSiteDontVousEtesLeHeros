@@ -14,7 +14,8 @@ class EventController extends Controller
 
     public function show(Event $event)
     {
-        $event->choices = $event->findChoices($event);
+        $event->choices = Event::findChoices($event);
+        $event->adventure = Event::findAdventure($event);
         return response()->json($event, 200);
     }
 
