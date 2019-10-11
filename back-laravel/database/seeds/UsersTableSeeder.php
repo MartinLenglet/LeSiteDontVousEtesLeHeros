@@ -17,8 +17,16 @@ class UsersTableSeeder extends Seeder
 
         $faker = \Faker\Factory::create();
 
+        // User : Alex
+        User::create([
+            'name' => 'Alexandre Lamart',
+            'email' => $faker->email,
+            'password' => 'totototo',
+            'api_token' => 1,
+        ]);
+
         // And now, let's create a few articles in our database:
-        for ($i = 1; $i <= 3; $i++) {
+        for ($i = 2; $i <= 4; $i++) {
             User::create([
                 'name' => $faker->name,
                 'email' => $faker->email,

@@ -20,8 +20,8 @@ class DecisionsTableSeeder extends Seeder
         // And now, let's create a few decisions in our database:
         for ($i = 0; $i < 100; $i++) {
             Decision::create([
-                'user_id' => rand(1, 3),
-                'choice_id' => rand(1, 60),
+                'user_id' => rand(1, 4),
+                'choice_id' => rand(1, 90),
             ]);
         }
     }

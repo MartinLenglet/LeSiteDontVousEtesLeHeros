@@ -22,8 +22,8 @@ class CommentsTableSeeder extends Seeder
             Comment::create([
                 'comment' => $faker->sentence,
                 'grade' => rand(1, 5),
-                'user_id' => rand(1, 3),
-                'adventure_id' => rand(1, 3),
+                'user_id' => rand(1, 4),
+                'adventure_id' => rand(1, 4),
             ]);
         }
     }

@@ -16,7 +16,7 @@ class CreateAdventuresTable extends Migration
         Schema::create('adventures', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('title');
-            $table->string('abstract');
+            $table->longText('abstract');
             $table->integer('user_id')->unsigned();
 			$table->foreign('user_id')
 				  ->references('id')
@@ -25,6 +25,11 @@ class CreateAdventuresTable extends Migration
 				  ->onUpdate('restrict');
             $table->timestamps();
         });
+
+        // Augmentation de la taille des champs
+        /*Schema::table('adventures', function (Blueprint $table) {
+            $table->string('abstract', 5000)->change();
+        });*/
     }
 
     /**
