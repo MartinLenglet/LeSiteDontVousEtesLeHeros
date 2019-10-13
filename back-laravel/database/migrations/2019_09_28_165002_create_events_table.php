@@ -16,7 +16,7 @@ class CreateEventsTable extends Migration
         Schema::create('events', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->longText('text');
-            $table->boolean('start');
+            $table->string('type')->default('standard');
             $table->integer('adventure_id')->unsigned();
 			$table->foreign('adventure_id')
 				  ->references('id')
