@@ -57,6 +57,13 @@ Route::get('bestAdventures', 'AdventureController@bestAdventures');
 
 // Liste des aventures
 Route::get('adventures', 'AdventureController@index');
+Route::get('adventures/{adventure}/custom', 'AdventureController@custom');
+
+
+
+
+
+
 
 
 // Pour l'enregistrement

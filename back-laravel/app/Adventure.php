@@ -79,4 +79,67 @@ class Adventure extends Model
         }
         return $allDecisions;
     }
+
+    /**
+     * Récupère les événements indexés par le position dans l'arbre
+     * 
+     */
+    static public function findStart(Adventure $adventure)
+    {
+        $allEvents = Adventure::findEvents($adventure);
+        foreach ($allEvents as $event) {
+            if ($event->type == 'start') {
+                return $event;
+            }
+        }
+
+        // Si il n'y a pas de start l'aventure n'est pas valide
+        return 'KO';
+    }
+
+    /**
+     * Récupère les événements indexés par le position dans l'arbre
+     * 
+     */
+    static public function findTreeEvents(Adventure $adventure)
+    {
+        $remainingEvents = Adventure::findEvents($adventure);
+        $remainingChoices = Adventure::findChoices($adventure);
+        $startEvent = Adventure::findStart($adventure);
+
+        // Initialisation de l'arbre
+        $level = 0;
+        $tree = [];
+
+        // Fonction récursive pour reconstituer l'arbre
+        $tree = Adventure::findLinkedEventsRecursive($tree, $startEvent, $level, $remainingEvents, $remainingChoices);
+
+        return $tree;
+    }
+
+    static public function findLinkedEventsRecursive($tree, $currentEvent, $level, $remainingEvents, $remainingChoices)
+    {
+        // Boucle sur les événements
+        foreach ($remainingEvents as $keyEvent => $event) {
+            // On cherche l'événement en question
+            if ($event->id == $currentEvent->id) {
+                // On cherche les choix qui partent de cet événement
+                // $currentEvent->choices = Event::findEvents($currentEvent);
+                $choicesFromCurrentEvent = [];
+                foreach ($remainingChoices as $keyChoice => $choice) {
+                    if ($event->id == $choice->eventFrom_id) {
+                        $choicesFromCurrentEvent[] = $choice;
+                        unset($remainingChoices[$keyChoice]);
+                        unset($remainingEvents[$keyEvent]);
+                        $eventTo = Choice::findEventTo($choice);
+                        $tree = Adventure::findLinkedEventsRecursive($tree, $eventTo, $level+1, $remainingEvents, $remainingChoices);
+                    }
+                }
+                $currentEvent->choices = $choicesFromCurrentEvent;
+                $tree[$level][] = $currentEvent;
+            }
+        }
+
+        return $tree;
+    }
 }

@@ -68,6 +68,13 @@ class AdventureController extends Controller
         return response()->json($return, 200);
     }
 
+    public function custom(Adventure $adventure)
+    {
+        $tree = Adventure::findTreeEvents($adventure);
+        $adventure->tree = $tree;
+        return response()->json($adventure, 200);
+    }
+
     public function show(Adventure $adventure)
     {
         $allComments = $adventure->findComments($adventure);

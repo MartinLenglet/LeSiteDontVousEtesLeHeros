@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Decision;
+use App\Event;
 
 class Choice extends Model
 {
@@ -15,5 +16,15 @@ class Choice extends Model
     {
         $decisions = Decision::all()->where('choice_id', $choice->id);
         return $decisions;
+    }
+
+    /**
+     * Récupère l'événement cible du choix
+     * 
+     */
+    static public function findEventTo(Choice $choice)
+    {
+        $event = Event::find($choice->eventTo_id);
+        return $event;
     }
 }
