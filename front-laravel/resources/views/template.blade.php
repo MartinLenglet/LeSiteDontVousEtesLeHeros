@@ -21,7 +21,7 @@
         <ul class="nav navbar-nav">
         <li><a href="<?= action('AventureController@index') ?>">Toutes les aventures</a></li>
         <li><a href="<?= action('EventController@show', ['id' => 1]) ?>">Test de l'Aventure 1</a></li>
-        <li><a href="#">Page 2</a></li>
+        <li><a href="<?= action('AventureController@custom', ['id' => 1]) ?>">Mode créateur</a></li>
         <li><a href="#">Page 3</a></li>
         </ul>
     </div>
