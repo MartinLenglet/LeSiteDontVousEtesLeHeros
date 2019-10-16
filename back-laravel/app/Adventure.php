@@ -153,6 +153,7 @@ class Adventure extends Model
             'edges' => []
         ];
         foreach ($tree as $level => $events) {
+            // En Arc de cercle
             $nbrEvents = count($events);
             // Distinction paire et impaire
             if ($nbrEvents % 2 == 0) {
@@ -171,11 +172,17 @@ class Adventure extends Model
                 $node = (object) [
                     'id' => 0
                 ];
-                $theta = (pi()/4) + ((($nbrEvents-1)/2)-intval($keyEvent))*$step;
+                // En Arc de cercle
+                // $theta = (pi()/4) + ((($nbrEvents-1)/2)-intval($keyEvent))*$step;
+                // $node->x = intval($level)*cos($theta);
+                // $node->y = intval($level)*sin($theta);
+
+                // Droit
+                $node->x = intval($keyEvent);
+                $node->y = intval($level);
+
                 $node->id = $event->id;
                 $node->label = $event->id;
-                $node->x = intval($level)*cos($theta);
-                $node->y = intval($level)*sin($theta);
                 $node->size = 3;
                 $node->color = "#FFFFFF";
                 $sigma->nodes[] = $node;
