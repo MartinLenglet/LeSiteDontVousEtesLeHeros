@@ -71,6 +71,7 @@ class AdventureController extends Controller
     public function custom(Adventure $adventure)
     {
         $tree = Adventure::findTreeEvents($adventure);
+        $tree = Adventure::formateTreeSigma($tree);
         $adventure->tree = $tree;
         return response()->json($adventure, 200);
     }

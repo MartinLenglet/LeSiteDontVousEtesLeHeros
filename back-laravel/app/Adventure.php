@@ -142,4 +142,59 @@ class Adventure extends Model
 
         return $tree;
     }
+
+    /**
+     * Formate le tableau en données exploitables par sigma.js pour l'affichage du graph
+     */
+    static public function formateTreeSigma($tree)
+    {
+        $sigma = (object) [
+            'nodes' => [],
+            'edges' => []
+        ];
+        foreach ($tree as $level => $events) {
+            $nbrEvents = count($events);
+            // Distinction paire et impaire
+            if ($nbrEvents % 2 == 0) {
+                // paire
+                $step = (pi()/4)/(($nbrEvents/2) + 1);
+            } else {
+                // impaire
+                if ($nbrEvents != 1) {
+                    $step = (pi()/2)/($nbrEvents-1);
+                } else {
+                    $step = 0;
+                }
+            }
+            foreach ($events as $keyEvent => $event) {
+                // Création du node
+                $node = (object) [
+                    'id' => 0
+                ];
+                $theta = (pi()/4) + ((($nbrEvents-1)/2)-intval($keyEvent))*$step;
+                $node->id = $event->id;
+                $node->label = $event->id;
+                $node->x = intval($level)*cos($theta);
+                $node->y = intval($level)*sin($theta);
+                $node->size = 3;
+                $node->color = "#FFFFFF";
+                $sigma->nodes[] = $node;
+
+                // Création de la liaison
+                foreach ($event->choices as $choice) {
+                    $edge = (object) [
+                        'id' => 0
+                    ];
+                    $edge->id = $choice->id;
+                    $edge->source = $choice->eventFrom_id;
+                    $edge->target = $choice->eventTo_id;
+                    $edge->type = "arrow";
+                    $edge->size = 3;
+                    $sigma->edges[] = $edge;
+                }
+            } 
+        }
+
+        return $sigma;
+    }
 }

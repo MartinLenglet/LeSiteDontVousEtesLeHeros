@@ -30,4 +30,27 @@ class AventureController extends Controller
             return 'KO';
         }
     }
+
+    public function custom(int $id)
+    {
+        // Appel à la classe des requêtes API
+        $apiRequest = new ApiRequest();
+
+        // On récupère l'arbre de l'aventure
+        $getAdventure = $apiRequest->get('adventures/' . $id . '/custom');
+
+        if ($getAdventure['statusCode'] == 200) {
+            // Success
+            $adventure = $getAdventure['body'];
+            // On retourne la vue avec l'arbre de l'aventure
+            return view(
+                'custom',
+                [
+                    'adventure' => $adventure
+                ]
+            );
+        } else {
+            return 'KO';
+        }
+    }
 }
