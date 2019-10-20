@@ -36,6 +36,8 @@ class UserController extends Controller
 
 	public function store(UserCreateRequest $request)
 	{
+		var_dump($request);
+		die();
 		$user = $this->userRepository->store($request->all());
 
 		return redirect('user')->withOk("L'utilisateur " . $user->name . " a été créé.");
