@@ -49,13 +49,12 @@ class EventController extends Controller
 
         // Post du nouvel événement
         $postEvent = $apiRequest->post('events', $form_params);
+        // var_dump($postEvent);
+        // die();
 
-        if ($postEvent['statusCode'] == 200) {
+        if ($postEvent['statusCode'] == 201) {
             // Success
-            // $event = $postEvent['body'];
-
-            // On retourne la vue avec la liste des aventures
-            // redirect()
+            return redirect('aventures/' . $form_params['adventure_id']);
         } else {
             // Fail
             return 'KO';

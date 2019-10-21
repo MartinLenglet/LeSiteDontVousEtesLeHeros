@@ -106,13 +106,32 @@ class Adventure extends Model
         $remainingEvents = Adventure::findEvents($adventure);
         $remainingChoices = Adventure::findChoices($adventure);
         $startEvent = Adventure::findStart($adventure);
-
-        // Initialisation de l'arbre
-        $level = 0;
         $tree = [];
+        $compteur = 0;
 
+        // Tant que tous les événements n'ont pas été parcouru
+        while (count($remainingEvents) != 0) {
+            // Initialisation de l'arbre
+            $level = 0;
+            $eventsRecursive = [];
+            if ($compteur == 0) {
+                $currentStartEvent = $startEvent;
+            } else {
+                // var_dump($remainingEvents[array_key_first(reset($remainingEvents))]);
+                // die();
+                $currentStartEvent = $remainingEvents[array_key_first(reset($remainingEvents))];
+            }
+            // Fonction récursive pour reconstituer l'arbre
+            $eventsRecursive = Adventure::findLinkedEventsRecursive($eventsRecursive, $currentStartEvent, $level, $remainingEvents, $remainingChoices);
+
+            // Mise à jour des variables
+            $tree[$compteur] = $eventsRecursive['tree'];
+            $remainingEvents = $eventsRecursive['remainingEvents'];
+            $remainingChoices = $eventsRecursive['remainingChoices'];
+            $compteur += 1;
+        }
         // Fonction récursive pour reconstituer l'arbre
-        $tree = Adventure::findLinkedEventsRecursive($tree, $startEvent, $level, $remainingEvents, $remainingChoices);
+        // $tree = Adventure::findLinkedEventsRecursive($tree, $startEvent, $level, $remainingEvents, $remainingChoices);
 
         return $tree;
     }
@@ -126,80 +145,105 @@ class Adventure extends Model
                 // On cherche les choix qui partent de cet événement
                 // $currentEvent->choices = Event::findEvents($currentEvent);
                 $choicesFromCurrentEvent = [];
+                // Chaque event est utilisé une fois
+                unset($remainingEvents[$keyEvent]);
                 foreach ($remainingChoices as $keyChoice => $choice) {
+                    // On cherche les choix reliés à cet event
                     if ($event->id == $choice->eventFrom_id) {
                         $choicesFromCurrentEvent[] = $choice;
+                        // Chaque choix est utilisé une fois
                         unset($remainingChoices[$keyChoice]);
-                        unset($remainingEvents[$keyEvent]);
                         $eventTo = Choice::findEventTo($choice);
-                        $tree = Adventure::findLinkedEventsRecursive($tree, $eventTo, $level+1, $remainingEvents, $remainingChoices);
+                        $recursiveArray = Adventure::findLinkedEventsRecursive($tree, $eventTo, $level+1, $remainingEvents, $remainingChoices);
+                        $tree = $recursiveArray['tree'];
+                        // $remainingEvents = $recursiveArray['remainingEvents'];
+                        $remainingChoices = $recursiveArray['remainingChoices'];
                     }
                 }
+                // On ajoute les choix aux événements pour pouvoir les tracer par la suite
                 $currentEvent->choices = $choicesFromCurrentEvent;
                 $tree[$level][] = $currentEvent;
+
+                break;
             }
         }
 
-        return $tree;
+        return [
+            'tree' => $tree,
+            'remainingEvents' => $remainingEvents,
+            'remainingChoices' => $remainingChoices
+        ];
     }
 
     /**
      * Formate le tableau en données exploitables par sigma.js pour l'affichage du graph
      */
-    static public function formateTreeSigma($tree)
+    static public function formateTreeSigma($treeArray)
     {
+        // Format de l'arbre sigma.js
         $sigma = (object) [
             'nodes' => [],
             'edges' => []
         ];
-        foreach ($tree as $level => $events) {
-            // En Arc de cercle
-            $nbrEvents = count($events);
-            // Distinction paire et impaire
-            if ($nbrEvents % 2 == 0) {
-                // paire
-                $step = (pi()/4)/(($nbrEvents/2) + 1);
-            } else {
-                // impaire
-                if ($nbrEvents != 1) {
-                    $step = (pi()/2)/($nbrEvents-1);
-                } else {
-                    $step = 0;
-                }
-            }
-            foreach ($events as $keyEvent => $event) {
-                // Création du node
-                $node = (object) [
-                    'id' => 0
-                ];
+
+        // Tableau des arrays pour avoir l'offset à appliquer
+        $arrayOffset = [];
+
+        // Boucle sur les arbres à afficher
+        foreach ($treeArray as $keyTree => $tree) {
+            // Offset pour afficher les arbres les uns en dessous des autres
+            $arrayOffset[$keyTree] = max(array_keys($tree)) + 1;
+            $offset = array_sum($arrayOffset) - $arrayOffset[$keyTree];
+            // Exploration de la profondeur de l'arbre
+            foreach ($tree as $level => $events) {
                 // En Arc de cercle
-                // $theta = (pi()/4) + ((($nbrEvents-1)/2)-intval($keyEvent))*$step;
-                // $node->x = intval($level)*cos($theta);
-                // $node->y = intval($level)*sin($theta);
-
-                // Droit
-                $node->x = intval($keyEvent);
-                $node->y = intval($level);
-
-                $node->id = $event->id;
-                $node->label = $event->id;
-                $node->size = 3;
-                $node->color = "#FFFFFF";
-                $sigma->nodes[] = $node;
-
-                // Création de la liaison
-                foreach ($event->choices as $choice) {
-                    $edge = (object) [
+                /*$nbrEvents = count($events);
+                // Distinction paire et impaire
+                if ($nbrEvents % 2 == 0) {
+                    // paire
+                    $step = (pi()/4)/(($nbrEvents/2) + 1);
+                } else {
+                    // impaire
+                    if ($nbrEvents != 1) {
+                        $step = (pi()/2)/($nbrEvents-1);
+                    } else {
+                        $step = 0;
+                    }
+                }*/
+                foreach ($events as $keyEvent => $event) {
+                    // Création du node
+                    $node = (object) [
                         'id' => 0
                     ];
-                    $edge->id = $choice->id;
-                    $edge->source = $choice->eventFrom_id;
-                    $edge->target = $choice->eventTo_id;
-                    $edge->type = "arrow";
-                    $edge->size = 3;
-                    $sigma->edges[] = $edge;
-                }
-            } 
+                    // En Arc de cercle
+                    // $theta = (pi()/4) + ((($nbrEvents-1)/2)-intval($keyEvent))*$step;
+                    // $node->x = intval($level)*cos($theta);
+                    // $node->y = intval($level)*sin($theta);
+
+                    // Droit
+                    $node->x = intval($keyEvent);
+                    $node->y = intval($level + $offset);
+
+                    $node->id = $event->id;
+                    $node->label = $event->id;
+                    $node->size = 3;
+                    $node->color = "#FFFFFF";
+                    $sigma->nodes[] = $node;
+
+                    // Création de la liaison
+                    foreach ($event->choices as $choice) {
+                        $edge = (object) [
+                            'id' => 0
+                        ];
+                        $edge->id = $choice->id;
+                        $edge->source = $choice->eventFrom_id;
+                        $edge->target = $choice->eventTo_id;
+                        $edge->type = "arrow";
+                        $edge->size = 3;
+                        $sigma->edges[] = $edge;
+                    }
+                } 
+            }
         }
 
         return $sigma;
