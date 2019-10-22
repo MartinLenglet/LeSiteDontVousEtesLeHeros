@@ -77,6 +77,12 @@ class AdventureController extends Controller
         // Récupère la liste des événements de cette aventure
         $events = Adventure::findEvents($adventure);
         $adventure->events = $events;
+        // Récupère l'événément de départ pour lancer le test
+        $startEvent = Adventure::findStart($adventure);
+        if ($startEvent != 'KO') {
+            $startEvent = $startEvent->id;
+        }
+        $adventure->startEvent_id = $startEvent;
         return response()->json($adventure, 200);
     }
 

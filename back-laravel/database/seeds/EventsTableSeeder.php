@@ -117,5 +117,12 @@ class EventsTableSeeder extends Seeder
                 }
             }
         }
+
+        // Créer l'événement de base de l'histoire vide
+        Event::create([
+            'text' => 'Je suis l\'événement de départ',
+            'adventure_id' => 5,
+            'type' => 'start'
+        ]);
     }
 }

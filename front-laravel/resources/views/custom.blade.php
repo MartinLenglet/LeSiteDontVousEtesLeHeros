@@ -36,7 +36,6 @@ Aperçu de l'aventure
                 <label for="typeEvent">Type de l'événement</label>
                 <select class="form-control" id="typeEvent" name="typeEvent">
                   <option>standard</option>
-                  <option>start</option>
                   <option>end</option>
                 </select>
               </div>
@@ -101,6 +100,9 @@ Aperçu de l'aventure
 
 <div class="col-sm-3">
     <div id="sigma-container" class="col-sm-12" style="height:500px; border: solid white 3px;"></div>
+    <a href="<?= action('EventController@show', ['id' => $adventure->startEvent_id]) ?>">
+      <button type="button" class="btn" style="color: black;">Tester</button>
+    </a>
     <script src="../js/sigma.js/sigma.min.js"></script>
     <script src="../js/sigma.js/plugins/sigma.parsers.json.min.js"></script>
     <script>
