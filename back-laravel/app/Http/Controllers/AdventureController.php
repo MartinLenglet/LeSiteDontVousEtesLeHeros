@@ -74,8 +74,9 @@ class AdventureController extends Controller
         // Formatage au format Sigma.js
         $tree = Adventure::formateTreeSigma($tree);
         $adventure->tree = $tree;
-        // $adventure->remainingEvents = $treeEvents['remainingEvents'];
-        // $adventure->remainingChoices = $treeEvents['remainingChoices'];
+        // Récupère la liste des événements de cette aventure
+        $events = Adventure::findEvents($adventure);
+        $adventure->events = $events;
         return response()->json($adventure, 200);
     }
 

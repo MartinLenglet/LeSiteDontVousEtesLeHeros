@@ -48,6 +48,13 @@ Route::group(['middleware' => 'auth:api'], function() {
     Route::post('events', 'EventController@store');
     Route::put('events/{event}', 'EventController@update');
     Route::delete('events/{event}', 'EventController@delete');
+
+    // Choices
+    Route::get('choices', 'ChoiceController@index');
+    Route::get('choices/{choice}', 'ChoiceController@show');
+    Route::post('choices', 'ChoiceController@store');
+    Route::put('choices/{choice}', 'ChoiceController@update');
+    Route::delete('choices/{choice}', 'ChoiceController@delete');
 });
 
 // Route sans log pour la page d'accueil

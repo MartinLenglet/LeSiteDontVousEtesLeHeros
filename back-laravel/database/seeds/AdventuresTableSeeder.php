@@ -24,8 +24,8 @@ class AdventuresTableSeeder extends Seeder
             'user_id' => 1,
         ]);
 
-        // And now, let's create a few articles in our database:
-        for ($i = 0; $i < 3; $i++) {
+        // And now, let's create a few adventures in our database:
+        for ($i = 0; $i < 4; $i++) {
             Adventure::create([
                 'title' => $faker->sentence,
                 'abstract' => $faker->sentence,

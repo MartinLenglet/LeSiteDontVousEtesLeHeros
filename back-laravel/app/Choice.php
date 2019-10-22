@@ -9,6 +9,15 @@ use App\Event;
 class Choice extends Model
 {
     /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = [
+        'text', 'eventFrom_id', 'eventTo_id',
+    ];
+
+    /**
      * Récupère les décisions prises par les joueurs pour ce choix
      * 
      */
