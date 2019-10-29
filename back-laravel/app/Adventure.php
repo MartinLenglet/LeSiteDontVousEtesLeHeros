@@ -122,7 +122,8 @@ class Adventure extends Model
                 $currentStartEvent = $remainingEvents[array_key_first(reset($remainingEvents))];
             }
             // Fonction récursive pour reconstituer l'arbre
-            $eventsRecursive = Adventure::findLinkedEventsRecursive($eventsRecursive, $currentStartEvent, $level, $remainingEvents, $remainingChoices);
+            // $eventsRecursive = Adventure::findLinkedEventsRecursive($eventsRecursive, $currentStartEvent, $level, $remainingEvents, $remainingChoices);
+            $eventsRecursive = Adventure::findLinkedEvents($currentStartEvent, $remainingEvents, $remainingChoices);
 
             // Mise à jour des variables
             $tree[$compteur] = $eventsRecursive['tree'];
@@ -136,6 +137,10 @@ class Adventure extends Model
         return $tree;
     }
 
+    /**
+     * Fonctionne pour récupérer l'arborescence de l'aventure le calcul du level ne respecte pas
+     * le plus petit nombre de choix depuis le début de l'arbre
+     */
     static public function findLinkedEventsRecursive($tree, $currentEvent, $level, $remainingEvents, $remainingChoices)
     {
         // Boucle sur les événements
@@ -145,14 +150,19 @@ class Adventure extends Model
                 // On cherche les choix qui partent de cet événement
                 // $currentEvent->choices = Event::findEvents($currentEvent);
                 $choicesFromCurrentEvent = [];
+
                 // Chaque event est utilisé une fois
                 unset($remainingEvents[$keyEvent]);
+
                 foreach ($remainingChoices as $keyChoice => $choice) {
                     // On cherche les choix reliés à cet event
                     if ($event->id == $choice->eventFrom_id) {
                         $choicesFromCurrentEvent[] = $choice;
+
                         // Chaque choix est utilisé une fois
                         unset($remainingChoices[$keyChoice]);
+
+                        // Appel récursif
                         $eventTo = Choice::findEventTo($choice);
                         $recursiveArray = Adventure::findLinkedEventsRecursive($tree, $eventTo, $level+1, $remainingEvents, $remainingChoices);
                         $tree = $recursiveArray['tree'];
@@ -160,12 +170,90 @@ class Adventure extends Model
                         $remainingChoices = $recursiveArray['remainingChoices'];
                     }
                 }
+
                 // On ajoute les choix aux événements pour pouvoir les tracer par la suite
                 $currentEvent->choices = $choicesFromCurrentEvent;
                 $tree[$level][] = $currentEvent;
 
                 break;
             }
+        }
+
+        return [
+            'tree' => $tree,
+            'remainingEvents' => $remainingEvents,
+            'remainingChoices' => $remainingChoices
+        ];
+    }
+
+    /**
+     * Récupère l'arborescence avec le level correct
+     */
+    static public function findLinkedEvents($startEvent, $remainingEvents, $remainingChoices)
+    {
+        // initialisation de l'arborescence
+        $level = 0;
+        $tree[$level][] = $startEvent;
+        $alreadyUsedEvents = [];
+
+        // On boucle tant qu'on trouve des nouveaux choix dans les événements
+        while (isset($tree[$level])) {
+            // On passe par tous les events d'un niveau avant de passer au suivant
+            foreach ($tree[$level] as $keyCurrentEvent => $currentEvent) {
+                // On cherche l'événement courant dans les événements restants
+                foreach ($remainingEvents as $keyEvent => $event) {
+                    if ($event->id === $currentEvent->id) {
+                        // On garde en mémoire les events déjà parcourus pour ne pas les insérer plusieurs fois
+                        $alreadyUsedEvents[] = $remainingEvents[$keyEvent];
+                        unset($remainingEvents[$keyEvent]);
+
+                        // On ajoute les choix aux événements départ
+                        $currentChoices = Event::findChoices($currentEvent);
+                        $tree[$level][$keyCurrentEvent]['choices'] = $currentChoices;
+
+                        // On parcourt les choix pour ajouter les events destination au level suivant
+                        foreach ($currentChoices as $currentChoice) {
+                            // On cherche le choix courant dans les choix restants
+                            foreach ($remainingChoices as $keyChoice => $choice) {
+                                if ($choice->id === $currentChoice->id) {
+                                    // On unset le choix pour gagner du temps sur les prochaines boucles
+                                    unset($remainingChoices[$keyChoice]);
+
+                                    // On récupère l'event de destination
+                                    $eventTo = Choice::findEventTo($currentChoice);
+
+                                    // On vérifie qu'il n'a pas déjà été ajouté dans les boucles précédentes
+                                    $alreadyUsed = false;
+                                    foreach ($alreadyUsedEvents as $alreadyUsedEvent) {
+                                        if ($alreadyUsedEvent->id === $eventTo->id) {
+                                            $alreadyUsed = true;
+                                        }
+                                    }
+
+                                    // On vérifie qu'il n'a pas déjà été rajouté depuis l'événement courant
+                                    $alreadyFound = false;
+                                    if (isset($tree[$level+1])) {
+                                        foreach ($tree[$level+1] as $alreadyFoundEvent) {
+                                            if ($alreadyFoundEvent->id === $eventTo->id) {
+                                                $alreadyFound = true;
+                                            }
+                                        }
+                                    }
+
+                                    // Si il est nouveau ou l'ajoute à l'arborescence
+                                    if (!$alreadyUsed && !$alreadyFound) {
+                                        $tree[$level+1][] = $eventTo;
+                                    }
+                                    break;
+                                }
+                            }
+                        }
+                        break;
+                    }
+                }
+            }
+            // Incrémentation du compteur
+            $level += 1;
         }
 
         return [

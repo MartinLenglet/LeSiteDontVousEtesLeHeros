@@ -71,6 +71,8 @@ class AdventureController extends Controller
     public function custom(Adventure $adventure)
     {
         $tree = Adventure::findTreeEvents($adventure);
+        // Si on veut envoyer l'arborescence brute au front
+        // $adventure->treeRaw = $tree;
         // Formatage au format Sigma.js
         $tree = Adventure::formateTreeSigma($tree);
         $adventure->tree = $tree;
