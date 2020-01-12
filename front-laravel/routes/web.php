@@ -21,3 +21,4 @@ Route::get('aventures/{id}', 'AventureController@custom');
 Route::get('events/{id}', 'EventController@show');
 Route::post('events', 'EventController@create');
 Route::post('choices', 'ChoiceController@create');
+// Route::get('tirage', 'TirageController@index');

@@ -240,8 +240,16 @@ class Adventure extends Model
                                         }
                                     }
 
-                                    // Si il est nouveau ou l'ajoute à l'arborescence
-                                    if (!$alreadyUsed && !$alreadyFound) {
+                                    // On vérifie qu'il n'est pas sur le même niveau
+                                    $sameLevel = false;
+                                    foreach ($tree[$level] as $sameLevelEvent) {
+                                        if ($sameLevelEvent->id === $eventTo->id) {
+                                            $sameLevel = true;
+                                        }
+                                    }
+
+                                    // Si il est nouveau on l'ajoute à l'arborescence
+                                    if (!$alreadyUsed && !$alreadyFound && !$sameLevel) {
                                         $tree[$level+1][] = $eventTo;
                                     }
                                     break;
@@ -268,6 +276,7 @@ class Adventure extends Model
      */
     static public function formateTreeSigma($treeArray)
     {
+        // return $treeArray;
         // Format de l'arbre sigma.js
         $sigma = (object) [
             'nodes' => [],

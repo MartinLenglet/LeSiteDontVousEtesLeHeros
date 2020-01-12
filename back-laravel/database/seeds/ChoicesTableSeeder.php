@@ -61,7 +61,12 @@ class ChoicesTableSeeder extends Seeder
         Choice::create([
             'text' => "Vous décidez d'étudier plus en détail la carte avant de vous lancer dans l'aventure",
             'eventFrom_id' => 4,
-            'eventTo_id' => 6,
+            'eventTo_id' => 4,
+        ]);
+        Choice::create([
+            'text' => "Vous décidez de suivre le chemin de droite",
+            'eventFrom_id' => 4,
+            'eventTo_id' => 10,
         ]);
         Choice::create([
             'text' => "Activer votre armure invisible pour vous approcher du mur",
