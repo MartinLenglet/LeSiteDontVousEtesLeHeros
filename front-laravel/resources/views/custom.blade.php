@@ -8,6 +8,7 @@ Aperçu de l'aventure
 <div class="col-sm-1">
 </div>
 <div class="col-sm-7" style="border: solid white 3px;">
+<?php // var_dump($adventure->tree); ?>
 
     <h2 style="text-align: center;">Mode Créateur : <?= $adventure->title ?></h2>
 
@@ -23,26 +24,11 @@ Aperçu de l'aventure
           <div class="panel-body">
 
             <h3>Nouvel Evénement :</h3>
-            <form action="<?= action('EventController@create') ?>" method="POST">
-              {{ csrf_field() }}
-              <div class="form-group" hidden="hidden">
-                <input name="adventure_id" value="<?= $adventure->id ?>">
-              </div>
-              <div class="form-group">
-                <label for="textEvent">Texte de l'événement</label>
-                <textarea class="form-control" name="textEvent" id="textEvent" rows="3"></textarea>
-              </div>
-              <div class="form-group">
-                <label for="typeEvent">Type de l'événement</label>
-                <select class="form-control" id="typeEvent" name="typeEvent">
-                  <option>standard</option>
-                  <option>end</option>
-                </select>
-              </div>
-              <div class="form-group" style="text-align: right; color: black;">
-                <input type="submit" value="Créer">
-              </div>
-            </form>
+            <?php $formData = [
+              'action' => 'EventController@create',
+              'method' => 'POST'
+            ]; ?>
+            @include('formEvent', $formData)
 
           </div>
         </div>
@@ -51,10 +37,30 @@ Aperçu de l'aventure
         <div class="panel-heading" style="background-color: black; color: white;">
           <h4 class="panel-title">
             <a data-toggle="collapse" data-parent="#accordion" href="#collapse2">
-            Créer un choix</a>
+            Modifier un Evénement</a>
           </h4>
         </div>
         <div id="collapse2" class="panel-collapse collapse">
+          <div class="panel-body">
+
+            <h3>Evénement sélectionné :</h3>
+            <?php $formData = [
+              'action' => 'EventController@update',
+              'method' => 'PATCH'
+            ]; ?>
+            @include('formEvent', $formData)
+            
+          </div>
+        </div>
+      </div>
+      <div class="panel panel-default" style="background-color: black;">
+        <div class="panel-heading" style="background-color: black; color: white;">
+          <h4 class="panel-title">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapse3">
+            Créer un choix</a>
+          </h4>
+        </div>
+        <div id="collapse3" class="panel-collapse collapse">
           <div class="panel-body">
 
             <h3>Nouveau Choix :</h3>
@@ -99,7 +105,7 @@ Aperçu de l'aventure
 </div>
 
 <div class="col-sm-3">
-    <div id="sigma-container" class="col-sm-12" style="height:500px; border: solid white 3px;"></div>
+    <div id="sigma-container" class="col-sm-12" style="height:500px; border: solid white 3px;background-color: white;"></div>
     <a href="<?= action('EventController@show', ['id' => $adventure->startEvent_id]) ?>">
       <button type="button" class="btn" style="color: black;">Tester</button>
     </a>
@@ -120,6 +126,13 @@ Aperçu de l'aventure
        );
        s.graph.read(data);
        s.refresh()
+
+      // Bind the events:
+      // s.bind('overNode outNode clickNode doubleClickNode rightClickNode', function(e) {
+      s.bind('clickNode', function(e) {
+          // console.log(e.type, e.data.node.label, e.data.captor);
+          console.log(e.data.node.id);
+      });
     </script>
 </div>
 <div class="col-sm-1">

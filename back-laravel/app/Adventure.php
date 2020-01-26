@@ -322,9 +322,9 @@ class Adventure extends Model
                     $node->y = intval($level + $offset);
 
                     $node->id = $event->id;
-                    $node->label = $event->id;
+                    $node->label = "$event->id";
                     $node->size = 3;
-                    $node->color = "#FFFFFF";
+                    $node->color = "#FF6600";
                     $sigma->nodes[] = $node;
 
                     // Création de la liaison

@@ -60,4 +60,34 @@ class EventController extends Controller
             return 'KO';
         }
     }
+
+    public function update(Request $request)
+    {
+        // Récupération des paramètres de la requête
+        $form_params = $request->all();
+        var_dump($form_params);
+        die();
+
+        // Rename pour la base de données
+        $form_params['text'] = $form_params['textEvent'];
+        unset($form_params['textEvent']);
+        $form_params['type'] = $form_params['typeEvent'];
+        unset($form_params['typeEvent']);
+
+        // Appel à la classe des requêtes API
+        $apiRequest = new ApiRequest();
+
+        // Post du nouvel événement
+        $postEvent = $apiRequest->post('events', $form_params);
+        // var_dump($postEvent);
+        // die();
+
+        if ($postEvent['statusCode'] == 201) {
+            // Success
+            return redirect('aventures/' . $form_params['adventure_id']);
+        } else {
+            // Fail
+            return 'KO';
+        }
+    }
 }
