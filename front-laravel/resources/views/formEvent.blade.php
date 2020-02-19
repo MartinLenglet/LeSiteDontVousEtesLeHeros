@@ -1,16 +1,19 @@
 <?php $isModify = ($formData['method'] == 'PATCH'); ?>
-<form action="<?= action($formData['action']) ?>" method="<?= $formData['method'] ?>">
+<form action="<?= action($formData['action']) ?>" method="POST">
     {{ csrf_field() }}
+    <?php if ($formData['method'] == 'PATCH') { ?>
+        {{ method_field('PATCH') }}
+    <?php } ?>
     <div class="form-group" hidden="hidden">
         <input name="adventure_id" value="<?= $adventure->id ?>">
     </div>
 
     <?php if ($isModify) { ?>
         <div class="form-group" hidden="hidden">
-            <input name="event_id">
+            <input type="text"name="event_id" id="event_id">
         </div>
-        <div class="form-group" readonly="readonly">
-            <input name="eventNumber">
+        <div class="form-group" style="color: black;">
+            <input type="text" readonly="readonly" name="eventNumber" id="eventNumber">
         </div>
     <?php } ?>
 
@@ -21,7 +24,6 @@
             name="<?= $idTextEvent ?>" 
             id="<?= $idTextEvent ?>" 
             rows="3" 
-            <?= ($isModify) ? 'readonly="readonly"' : ''?>
         ></textarea>
     </div>
     

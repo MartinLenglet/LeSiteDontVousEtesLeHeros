@@ -78,6 +78,7 @@ class AdventureController extends Controller
         $adventure->tree = $tree;
         // Récupère la liste des événements de cette aventure
         $events = Adventure::findEvents($adventure);
+
         $adventure->events = $events;
         // Récupère l'événément de départ pour lancer le test
         $startEvent = Adventure::findStart($adventure);

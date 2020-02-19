@@ -39,7 +39,14 @@ class Adventure extends Model
     static public function findEvents(Adventure $adventure)
     {
         $allEvents = Event::all()->where('adventure_id', $adventure->id);
-        return $allEvents;
+
+        // Mise en indice des id événements
+        $allEventsOrdered = [];
+        foreach ($allEvents as $event) {
+            $allEventsOrdered[$event->id] = $event;
+        }
+
+        return $allEventsOrdered;
     }
 
     /**
@@ -117,9 +124,9 @@ class Adventure extends Model
             if ($compteur == 0) {
                 $currentStartEvent = $startEvent;
             } else {
-                // var_dump($remainingEvents[array_key_first(reset($remainingEvents))]);
-                // die();
-                $currentStartEvent = $remainingEvents[array_key_first(reset($remainingEvents))];
+                // $currentStartEvent = $remainingEvents[array_key_first(reset($remainingEvents))];
+
+                $currentStartEvent = $remainingEvents[array_key_first($remainingEvents)];
             }
             // Fonction récursive pour reconstituer l'arbre
             // $eventsRecursive = Adventure::findLinkedEventsRecursive($eventsRecursive, $currentStartEvent, $level, $remainingEvents, $remainingChoices);

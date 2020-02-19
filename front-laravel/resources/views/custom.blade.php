@@ -112,7 +112,8 @@ Aperçu de l'aventure
     <script src="../js/sigma.js/sigma.min.js"></script>
     <script src="../js/sigma.js/plugins/sigma.parsers.json.min.js"></script>
     <script>
-    var data = <?= json_encode($adventure->tree) ?>
+      var data = <?= json_encode($adventure->tree); ?>;
+      var events = <?= json_encode($adventure->events); ?>;
 
     // Initialize sigma:
       var s = new sigma(
@@ -131,7 +132,12 @@ Aperçu de l'aventure
       // s.bind('overNode outNode clickNode doubleClickNode rightClickNode', function(e) {
       s.bind('clickNode', function(e) {
           // console.log(e.type, e.data.node.label, e.data.captor);
-          console.log(e.data.node.id);
+          idEvent = e.data.node.id;
+          clickedEvent = events[idEvent];
+          $('#eventNumber').val(clickedEvent.id);
+          $('#event_id').val(clickedEvent.id);
+          $('#textEventModify').val(clickedEvent.text);
+          $('#typeEventModify').val(clickedEvent.type);
       });
     </script>
 </div>

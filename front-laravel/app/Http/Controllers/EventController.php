@@ -44,6 +44,9 @@ class EventController extends Controller
         $form_params['type'] = $form_params['typeEvent'];
         unset($form_params['typeEvent']);
 
+        var_dump($form_params);
+        die();
+
         // Appel à la classe des requêtes API
         $apiRequest = new ApiRequest();
 
@@ -65,24 +68,29 @@ class EventController extends Controller
     {
         // Récupération des paramètres de la requête
         $form_params = $request->all();
-        var_dump($form_params);
-        die();
+
+        // On conserve l'id pour l'update
+        $id = $form_params['event_id'];
 
         // Rename pour la base de données
-        $form_params['text'] = $form_params['textEvent'];
-        unset($form_params['textEvent']);
-        $form_params['type'] = $form_params['typeEvent'];
-        unset($form_params['typeEvent']);
+        $form_params['text'] = $form_params['textEventModify'];
+        unset($form_params['textEventModify']);
+        $form_params['type'] = $form_params['typeEventModify'];
+        unset($form_params['typeEventModify']);
+        unset($form_params['eventNumber']);
+
+        // var_dump($form_params);
+        // die();
 
         // Appel à la classe des requêtes API
         $apiRequest = new ApiRequest();
 
         // Post du nouvel événement
-        $postEvent = $apiRequest->post('events', $form_params);
-        // var_dump($postEvent);
+        $putEvent = $apiRequest->put('events/' . $id, $form_params);
+        // var_dump($putEvent);
         // die();
 
-        if ($postEvent['statusCode'] == 201) {
+        if ($putEvent['statusCode'] == 200) {
             // Success
             return redirect('aventures/' . $form_params['adventure_id']);
         } else {
