@@ -35,6 +35,16 @@ class EventController extends Controller
 
     public function delete(Event $event)
     {
+        // On supprime aussi tous les choix vers ou depuis cet event
+        $choicesFrom = Event::findChoices($event);
+        foreach ($choicesFrom as $choice) {
+            $choice->delete();
+        }
+        $choicesTo = Event::findChoicesTo($event);
+        foreach ($choicesTo as $choice) {
+            $choice->delete();
+        }
+
         $event->delete();
 
         return response()->json(null, 204);

@@ -36,7 +36,7 @@ Aperçu de l'aventure
       <div class="panel panel-default" style="background-color: black;">
         <div class="panel-heading" style="background-color: black; color: white;">
           <h4 class="panel-title">
-            <a data-toggle="collapse" data-parent="#accordion" href="#collapse2">
+            <a id="modifyEvent" class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapse2">
             Modifier un Evénement</a>
           </h4>
         </div>
@@ -138,6 +138,11 @@ Aperçu de l'aventure
           $('#event_id').val(clickedEvent.id);
           $('#textEventModify').val(clickedEvent.text);
           $('#typeEventModify').val(clickedEvent.type);
+
+          // On ouvre la fenêtre de modification si elle ne l'est pas déjà
+          if ($('#modifyEvent').hasClass('collapsed')) {
+            $('#modifyEvent').click();
+          }
       });
     </script>
 </div>

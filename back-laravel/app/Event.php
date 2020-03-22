@@ -27,6 +27,12 @@ class Event extends Model
         return $choices;
     }
 
+    static public function findChoicesTo(Event $event)
+    {
+        $choices = Choice::all()->where('eventTo_id', $event->id);
+        return $choices;
+    }
+
     static public function findAdventure(Event $event)
     {
         $adventure = Adventure::find($event->adventure_id);

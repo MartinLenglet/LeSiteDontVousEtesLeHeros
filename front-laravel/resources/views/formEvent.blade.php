@@ -39,6 +39,9 @@
         </select>
     </div>
     <div class="form-group" style="text-align: right; color: black;">
-        <input type="submit" value="<?= ($isModify) ? 'Modifier' : 'Créer'?>">
+        <input id="submit" name="submit" type="submit" value="<?= ($isModify) ? 'Modifier' : 'Créer'?>">
+        <?php if ($isModify) { ?>
+            <input id="delete" name="delete" type="submit" value="Supprimer">
+        <?php } ?>
     </div>
 </form>

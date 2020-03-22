@@ -97,4 +97,27 @@ class ApiRequest extends Model
             'statusCode' => $statusCode
         ];
     }
+
+    public function erase($suffix)
+    {
+        // Création de la requête
+        $client = new Client(['base_uri' => $this->backUrl]);
+
+        // Envoi de la requête http
+        $response = $client->request(
+            'delete',
+            $suffix,
+            ['headers' => $this->header]
+        );
+    
+        // Récupération du résultat de la requête
+        $statusCode = $response->getStatusCode();
+        // Body transformé en objet Json
+        $body = json_decode($response->getBody()->getContents());
+    
+        return [
+            'body' => $body,
+            'statusCode' => $statusCode
+        ];
+    }
 }

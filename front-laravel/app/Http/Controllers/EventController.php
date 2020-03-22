@@ -69,6 +69,11 @@ class EventController extends Controller
         // Récupération des paramètres de la requête
         $form_params = $request->all();
 
+        // Même formulaire pour update et delete, on fait la distinction ici
+        if (isset($form_params['delete'])) {
+            return $this->delete($request);
+        }
+
         // On conserve l'id pour l'update
         $id = $form_params['event_id'];
 
@@ -91,6 +96,41 @@ class EventController extends Controller
         // die();
 
         if ($putEvent['statusCode'] == 200) {
+            // Success
+            return redirect('aventures/' . $form_params['adventure_id']);
+        } else {
+            // Fail
+            return 'KO';
+        }
+    }
+
+    public function delete(Request $request)
+    {
+        // Récupération des paramètres de la requête
+        $form_params = $request->all();
+
+        // On conserve l'id pour l'update
+        $id = $form_params['event_id'];
+
+        // Rename pour la base de données
+        // $form_params['text'] = $form_params['textEventModify'];
+        // unset($form_params['textEventModify']);
+        // $form_params['type'] = $form_params['typeEventModify'];
+        // unset($form_params['typeEventModify']);
+        // unset($form_params['eventNumber']);
+
+        // var_dump($form_params);
+        // die();
+
+        // Appel à la classe des requêtes API
+        $apiRequest = new ApiRequest();
+
+        // Post du nouvel événement
+        $deleteEvent = $apiRequest->erase('events/' . $id);
+        // var_dump($deleteEvent);
+        // die();
+
+        if ($deleteEvent['statusCode'] == 204) {
             // Success
             return redirect('aventures/' . $form_params['adventure_id']);
         } else {
